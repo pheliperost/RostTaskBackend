@@ -4,11 +4,11 @@ module.exports = app => {
 
      app.route('/tasks')
         .all(app.config.passport.authenticate())
-         .get(app.api.task.getTasks)
+        .get(app.api.task.getTasks)
         .post(app.api.task.save)
 
         
-    app.route('/task/:id')
+    app.route('/tasks/:id')
         .all(app.config.passport.authenticate())
         .delete(app.api.task.remove)
 

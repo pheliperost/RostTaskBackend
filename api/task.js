@@ -28,16 +28,16 @@ module.exports = app =>{
 
     const remove = (req, res) => {
         app.db('tasks')
-            .where({id: req.params.id, userId: req.user.id})
+            .where({ id: req.params.id, userId: req.user.id})
             .del()
-            .then(rowsDeleted =>{
+            .then(rowsDeleted => {
                 if(rowsDeleted > 0){
-                    req.status(204).send()
+                    res.status(204).send()
                 }else{
                     const msg = `nao foi encontrada task com id ${req.params.id}.`
-                    req.status(400).send(msg)
+                    res.status(400).send(msg)
                 }
-            })
+            })            
             .catch(err => res.status(400).json(err))
     }   
 
