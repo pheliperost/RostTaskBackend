@@ -51,7 +51,7 @@ module.exports = app =>{
 
     const toggleTask = (req, res) => {
         app.db('tasks')
-            .where({id: params.id, userId: req.user.id})
+            .where({id: req.params.id, userId: req.user.id})
             .first()
             .then(task => {
                 if(!task){
