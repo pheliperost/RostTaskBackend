@@ -7,6 +7,22 @@ module.exports = app => {
         .get(app.api.task.getTasks)
         .post(app.api.task.save)
 
+    app.route('/eventtype')
+        // .all(app.config.passport.authenticate())
+        .get(app.api.eventtype.getAllEventTypes)
+        .post(app.api.eventtype.save)
+         
+    app.route('/eventtype/:id')
+        .delete(app.api.eventtype.remove)
+
+    app.route('/events')
+        // .all(app.config.passport.authenticate())
+        .get(app.api.events.getEvents)
+        .post(app.api.events.save)
+        
+    app.route('/events/:id')
+        .delete(app.api.events.remove)
+
     app.route('/students')
        // .all(app.config.passport.authenticate())
         .get(app.api.students.getStudents)
