@@ -7,6 +7,13 @@ module.exports = app => {
         .get(app.api.task.getTasks)
         .post(app.api.task.save)
 
+    app.route('/students')
+       // .all(app.config.passport.authenticate())
+        .get(app.api.students.getStudents)
+        .post(app.api.students.save)
+        
+    app.route('/students/:id')
+        .delete(app.api.students.remove)
         
     app.route('/tasks/:id')
         .all(app.config.passport.authenticate())
