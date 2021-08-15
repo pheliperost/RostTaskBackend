@@ -11,16 +11,21 @@ module.exports = app =>{
     }
 
     const save = (req, res) => {
-       /* if(!req.body.name.trim()){
+        
+      /*  if(!req.body.name.trim()){
             return res.status(400).send('Nome é um campo obrigatório')
         }
         */
-       // req.body.userId = req.user.id //pega o id do usuário do token, requisiçao e add
+        
+        //Alert.Alert(req.body.desc)
+
+     //   req.body.userId = req.user.id //pega o id do usuário do token, requisiçao e add
                                       //no corpo a ser adicionado na tabela
             app.db('students')
                 .insert(req.body)
                 .then(_=> res.status(204).send())
                 .catch(err => res.status(400).json(err))
+                
     }
 
     const remove = (req, res) => {
