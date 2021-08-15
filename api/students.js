@@ -3,8 +3,17 @@ const moment = require('moment')
 module.exports = app =>{
     const getStudents = (req, res)=>{
         
-        app.db('students')
+       /* app.db('students')
             .where({ name: req.body.name})            
+            .orderBy('name')
+            .then(students => res.json(students))
+            .catch(err => res.status(500).json(err))
+            */
+            app.db('students')
+            .modify(function(queryBuilder){
+                if(req.body.name)
+                    queryBuilder.where({ name: req.body.name});  
+            })                      
             .orderBy('name')
             .then(students => res.json(students))
             .catch(err => res.status(500).json(err))
