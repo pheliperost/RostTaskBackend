@@ -45,33 +45,33 @@ module.exports = app =>{
                 if(rowsDeleted > 0){
                     res.status(204).send()
                 }else{
-                    const msg = `nao foi encontradp estudante com id ${req.params.id}.`
+                    const msg = `nao foi encontrado estudante com id ${req.params.id}.`
                     res.status(400).send(msg)
                 }
             })            
             .catch(err => res.status(400).json(err))
     }   
 
-    const updateTaskDoneAt = (req, res, doneAt) => {
+    const updateStudentStatus = (req, res, active) => {
         app.db('students')
-            .where({id: req.params.id, userId: req.user.id})
-            .update({doneAt})
+            .where({id: req.params.id})
+            .update({active})
             .then(_=> res.status(204).send())
             .catch(err => res.status(400).json(err))
     }
 
     const toggleStudentStatus = (req, res) => {
         app.db('students')
-            .where({id: req.params.id, userId: req.user.id})
+            .where({id: req.params.id})
             .first()
-            .then(task => {
-                if(!task){
+            .then(student => {
+                if(!student){
                     const msg = `Task com id ${req.params.id} nao encontrada`
                     return res.status(400).send(msg)
                 }
 
-                const doneAt = task.doneAt ? null : new Date()
-                updateTaskDoneAt(req, res, doneAt)
+                const active = student.active ? false : true
+                updateStudentStatus(req, res, active)
 
             })
             .catch(err => res.status(400).json(err))

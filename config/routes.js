@@ -30,7 +30,12 @@ module.exports = app => {
         
     app.route('/students/:id')
         .delete(app.api.students.remove)
-        
+ 
+    app.route('/students/:id/toggle')
+        //.all(app.config.passport.authenticate())
+        .put(app.api.students.toggleStudentStatus)  
+
+
     app.route('/tasks/:id')
         .all(app.config.passport.authenticate())
         .delete(app.api.task.remove)
