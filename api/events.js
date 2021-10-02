@@ -3,14 +3,14 @@ const moment = require('moment')
 module.exports = app =>{
     const getEvents = (req, res)=>{
         
-        app.db('events')     
+        app.db('EventView')     
             .then(events => res.json(events))
             .catch(err => res.status(500).json(err))
     }
 
     const save = (req, res) => {
        /* if(!req.body.name.trim()){
-            return res.status(400).send('Nome é um campo obrigatório')
+            return res.status(400).send('Nome é u   m campo obrigatório')
         }
         */
        // req.body.userId = req.user.id //pega o id do usuário do token, requisiçao e add
@@ -18,8 +18,10 @@ module.exports = app =>{
             app.db('events')
                 .insert(req.body)
                 .then(_=> res.status(204).send())
-                .catch(err => res.status(400).json(err))
-    }
+                .catch(
+                    err => res.status(400).json(err)
+                    )
+        }
 
     const remove = (req, res) => {
         app.db('events')
