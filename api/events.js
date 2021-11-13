@@ -19,7 +19,10 @@ module.exports = app =>{
                 .insert(req.body)
                 .then(_=> res.status(204).send())
                 .catch(
-                    err => res.status(400).json(err)
+                    //err => res.status(400).json(err)                    
+                    err => {console.log(err)
+                    res.status(400).json(err)
+                    }
                     )
         }
 
