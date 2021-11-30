@@ -26,6 +26,29 @@ module.exports = app =>{
                     )
         }
 
+    const update = (req, res) =>{
+
+        const DataToUpd = {
+            date: req.body.date,
+            startedAt: req.body.startedAt,
+            endedAt: req.body.endedAt,
+            Obs: req.body.Obs,
+            eventType: req.body.eventType,
+            student:  req.body.student
+        }
+
+        app.db('events')
+        .where({id: req.params.id})
+        .update(DataToUpd)
+        .then(_=> res.status(204).send())
+        .catch(
+            //err => res.status(400).json(err)                    
+            err => {console.log(err)
+            res.status(400).json(err)
+            })
+    }   
+    
+
     const remove = (req, res) => {
         app.db('events')
             .where({ id: req.params.id})
@@ -42,5 +65,5 @@ module.exports = app =>{
     }   
 
 
-    return {getEvents, save, remove}
+    return {getEvents, save, remove, update}
 }

@@ -19,6 +19,9 @@ module.exports = app => {
         // .all(app.config.passport.authenticate())
         .get(app.api.events.getEvents)
         .post(app.api.events.save)
+    
+    app.route('/events/:id')
+        .post(app.api.events.update)
         
     app.route('/events/:id')
         .delete(app.api.events.remove)
