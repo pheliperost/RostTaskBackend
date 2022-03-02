@@ -20,7 +20,13 @@ module.exports = app => {
         .get(app.api.events.getEvents)
         .post(app.api.events.save)
     
-    app.route('/events/:id')
+    app.route('/getAllEventsOrderedByDate')
+        .get(app.api.events.getAllEventsOrderedByDate)
+    
+        app.route('/getAllItemsCalendar')
+        .get(app.api.events.getAllItemsCalendar)
+
+        app.route('/events/:id')
         .post(app.api.events.update)
         
     app.route('/events/:id')
