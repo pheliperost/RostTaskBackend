@@ -11,15 +11,31 @@ module.exports = app =>{
                 if (data.hasOwnProperty(k)) {
                     const ev = data[k];
                     if (data[k].type == 'VEVENT') {
-                        console.log(`summary: ${ev.summary}`);
+                       /*  console.log(`------`);
+                        console.log(`uid: ${ev.uid}`); 
+                        console.log(`url: ${ev.url}`); 
+                        console.log(`dtstamp: ${ev.dtstamp}`);                         
+                        console.log(`startdate: ${ev.start.getDate()} `);
+                        console.log(`enddate: ${ev.end.getDate()} `);
+                        console.log(`description: ${ev.description}`);                          
                         console.log(`location: ${ev.location}`);
+                        console.log(`Status: ${ev.status}`); 
+                        console.log(`summary: ${ev.summary}`);
                         console.log(`date: ${ev.start.getDate()} `);
                         console.log(`month ${months[ev.start.getMonth()]}`);
                         console.log(`hour: ${ev.start.toLocaleTimeString('en-GB')}`); 
+                        console.log(`lastmodified: ${ev.lastmodified}`);                        
+                        console.log(`start: ${ev.start}`);                        
+                        console.log(`end: ${ev.end}`);   */                      
+                        
+                        
+                        
                         
                     }
+                   
                 }
             }
+            res.json(data)
         });
     }
 
