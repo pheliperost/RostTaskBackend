@@ -1,9 +1,40 @@
 const moment = require('moment')
 
 module.exports = app =>{
+
+    const getAllItemsCalendar = (req, res) =>{
+        const ical = require('node-ical');
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        ical.fromURL('http://saojosedoscampos-sor.pike13.com/my_calendar.ics?person_id=8595388&token=913a867e-ddd2-48fd-944a-b0c09ed42c43', {}, function (err, data) {
+            for (let k in data) {
+                if (data.hasOwnProperty(k)) {
+                    const ev = data[k];
+                    if (data[k].type == 'VEVENT') {
+                        console.log(`summary: ${ev.summary}`);
+                        console.log(`location: ${ev.location}`);
+                        console.log(`date: ${ev.start.getDate()} `);
+                        console.log(`month ${months[ev.start.getMonth()]}`);
+                        console.log(`hour: ${ev.start.toLocaleTimeString('en-GB')}`); 
+                        
+                    }
+                }
+            }
+        });
+    }
+
+
     const getEvents = (req, res)=>{
         
-        app.db('EventView')     
+        app.db('EventView') 
+            .then(events => res.json(events))
+            .catch(err => res.status(500).json(err))
+    }
+
+    const getAllEventsOrderedByDate = (req, res)=>{
+        
+        app.db('events')  
+            .groupBy('Obs')   
             .then(events => res.json(events))
             .catch(err => res.status(500).json(err))
     }
@@ -65,5 +96,5 @@ module.exports = app =>{
     }   
 
 
-    return {getEvents, save, remove, update}
+    return {getEvents, getAllEventsOrderedByDate, save, remove, update, getAllItemsCalendar}
 }
