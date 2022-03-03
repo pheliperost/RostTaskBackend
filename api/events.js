@@ -7,11 +7,11 @@ module.exports = app =>{
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         ical.fromURL('http://saojosedoscampos-sor.pike13.com/my_calendar.ics?person_id=8595388&token=913a867e-ddd2-48fd-944a-b0c09ed42c43', {}, function (err, data) {
-            for (let k in data) {
+            /* for (let k in data) {
                 if (data.hasOwnProperty(k)) {
                     const ev = data[k];
                     if (data[k].type == 'VEVENT') {
-                       /*  console.log(`------`);
+                         console.log(`------`);
                         console.log(`uid: ${ev.uid}`); 
                         console.log(`url: ${ev.url}`); 
                         console.log(`dtstamp: ${ev.dtstamp}`);                         
@@ -26,7 +26,7 @@ module.exports = app =>{
                         console.log(`hour: ${ev.start.toLocaleTimeString('en-GB')}`); 
                         console.log(`lastmodified: ${ev.lastmodified}`);                        
                         console.log(`start: ${ev.start}`);                        
-                        console.log(`end: ${ev.end}`);   */                      
+                        console.log(`end: ${ev.end}`);                        
                         
                         
                         
@@ -34,7 +34,7 @@ module.exports = app =>{
                     }
                    
                 }
-            }
+            } */
             res.json(data)
         });
     }
