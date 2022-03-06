@@ -1,7 +1,7 @@
 
 exports.up = function(knex) {
      return knex.schema.createTable('eventscalendar', table => {
-        table.increments('id').primary()        
+        table.uuid('id').primary()        
         table.string('url')
         table.datetime('dtstamp')
         table.integer('startdate')

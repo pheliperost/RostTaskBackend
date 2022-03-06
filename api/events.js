@@ -2,43 +2,106 @@ const moment = require('moment')
 
 module.exports = app =>{
 
-    const getAllItemsCalendar = (req, res) =>{
+    async function getAllItemsCalendar(req, res){
         const ical = require('node-ical');
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-        ical.fromURL('http://saojosedoscampos-sor.pike13.com/my_calendar.ics?person_id=8595388&token=913a867e-ddd2-48fd-944a-b0c09ed42c43', {}, function (err, data) {
-            /* for (let k in data) {
+        const events = await ical.fromURL('http://saojosedoscampos-sor.pike13.com/my_calendar.ics?person_id=8595388&token=913a867e-ddd2-48fd-944a-b0c09ed42c43', {}, function (err, data) {
+            const container = [];
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+
+            for (let k in data) {
                 if (data.hasOwnProperty(k)) {
                     const ev = data[k];
                     if (data[k].type == 'VEVENT') {
-                         console.log(`------`);
-                        console.log(`uid: ${ev.uid}`); 
-                        console.log(`url: ${ev.url}`); 
-                        console.log(`dtstamp: ${ev.dtstamp}`);                         
-                        console.log(`startdate: ${ev.start.getDate()} `);
-                        console.log(`enddate: ${ev.end.getDate()} `);
-                        console.log(`description: ${ev.description}`);                          
-                        console.log(`location: ${ev.location}`);
-                        console.log(`Status: ${ev.status}`); 
-                        console.log(`summary: ${ev.summary}`);
-                        console.log(`date: ${ev.start.getDate()} `);
-                        console.log(`month ${months[ev.start.getMonth()]}`);
-                        console.log(`hour: ${ev.start.toLocaleTimeString('en-GB')}`); 
-                        console.log(`lastmodified: ${ev.lastmodified}`);                        
-                        console.log(`start: ${ev.start}`);                        
-                        console.log(`end: ${ev.end}`);                        
                         
+                        const containerItem = [];
+                        containerItem[`id`] = ev.uid; 
+                        containerItem[`url`] = ev.url; 
+                        containerItem[`dtstamp`] = ev.dtstamp;
+                        containerItem[`startdate`] = ev.start.getDate();
+                        containerItem[`enddate`] = ev.end.getDate();
+                        containerItem[`description`] = ev.description;                          
+                        containerItem[`location`] = ev.location;
+                        containerItem[`status`] = ev.status; 
+                        containerItem[`summary`] = ev.summary;
+                        containerItem[`date`] = ev.start.getDate();
+                        containerItem[`month`] = months[ev.start.getMonth()];
+                        containerItem[`hour`] = ev.start.toLocaleTimeString('en-GB'); 
+                        containerItem[`lastmodified`] = ev.lastmodified;                        
+                        containerItem[`start`] = ev.start;                        
+                        containerItem[`end`] = ev.end;                        
                         
-                        
-                        
+                        container.push(containerItem);
                     }
-                   
                 }
-            } */
-            res.json(data)
+            }
+
+            app.db('eventscalendar')
+            .insert(container)
+            .then(_=> res.status(204).send())
+            .catch(
+                //err => res.status(400).json(err)                    
+                err => {console.log(err)
+                res.status(400).json(err)
+                }
+                )
         });
+
+        //const resultadosConv = await events.json();
+        //const valores = await  MoldingData(events);
+       // InsertEventIntoDB(data);
+        console.log(events)
+        //return await res.json(events)
+       // return events;
+    }
+    const MoldingData = data =>{
+        
+        const container = [];
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+
+        for (let k in data) {
+            if (data.hasOwnProperty(k)) {
+                const ev = data[k];
+                if (data[k].type == 'VEVENT') {
+                    
+                    const containerItem = [];
+                    containerItem[`id`] = ev.uid; 
+                    containerItem[`url`] = ev.url; 
+                    containerItem[`dtstamp`] = ev.dtstamp;
+                    containerItem[`startdate`] = ev.start.getDate();
+                    containerItem[`enddate`] = ev.end.getDate();
+                    containerItem[`description`] = ev.description;                          
+                    containerItem[`location`] = ev.location;
+                    containerItem[`status`] = ev.status; 
+                    containerItem[`summary`] = ev.summary;
+                    containerItem[`date`] = ev.start.getDate();
+                    containerItem[`month`] = months[ev.start.getMonth()];
+                    containerItem[`hour`] = ev.start.toLocaleTimeString('en-GB'); 
+                    containerItem[`lastmodified`] = ev.lastmodified;                        
+                    containerItem[`start`] = ev.start;                        
+                    containerItem[`end`] = ev.end;                        
+                    
+                    container.push(containerItem);
+                }
+            }
+        }
+       
+        app.db('eventscalendar')
+        .insert(container)
+        .then(_=> res.status(204).send())
+        .catch(
+            //err => res.status(400).json(err)                    
+            err => {console.log(err)
+            res.status(400).json(err)
+            }
+            )
     }
 
+    const InsertEventIntoDB = data =>{
+       
+    }
 
     const getEvents = (req, res)=>{
         
