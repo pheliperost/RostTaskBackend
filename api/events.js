@@ -47,61 +47,8 @@ module.exports = app =>{
                 }
                 )
         });
-
-        //const resultadosConv = await events.json();
-        //const valores = await  MoldingData(events);
-       // InsertEventIntoDB(data);
-        console.log(events)
-        //return await res.json(events)
-       // return events;
     }
-    const MoldingData = data =>{
-        
-        const container = [];
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-
-        for (let k in data) {
-            if (data.hasOwnProperty(k)) {
-                const ev = data[k];
-                if (data[k].type == 'VEVENT') {
-                    
-                    const containerItem = [];
-                    containerItem[`id`] = ev.uid; 
-                    containerItem[`url`] = ev.url; 
-                    containerItem[`dtstamp`] = ev.dtstamp;
-                    containerItem[`startdate`] = ev.start.getDate();
-                    containerItem[`enddate`] = ev.end.getDate();
-                    containerItem[`description`] = ev.description;                          
-                    containerItem[`location`] = ev.location;
-                    containerItem[`status`] = ev.status; 
-                    containerItem[`summary`] = ev.summary;
-                    containerItem[`date`] = ev.start.getDate();
-                    containerItem[`month`] = months[ev.start.getMonth()];
-                    containerItem[`hour`] = ev.start.toLocaleTimeString('en-GB'); 
-                    containerItem[`lastmodified`] = ev.lastmodified;                        
-                    containerItem[`start`] = ev.start;                        
-                    containerItem[`end`] = ev.end;                        
-                    
-                    container.push(containerItem);
-                }
-            }
-        }
-       
-        app.db('eventscalendar')
-        .insert(container)
-        .then(_=> res.status(204).send())
-        .catch(
-            //err => res.status(400).json(err)                    
-            err => {console.log(err)
-            res.status(400).json(err)
-            }
-            )
-    }
-
-    const InsertEventIntoDB = data =>{
-       
-    }
+   
 
     const getEvents = (req, res)=>{
         
