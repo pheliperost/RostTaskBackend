@@ -52,7 +52,7 @@ module.exports = app =>{
 
     const getEvents = (req, res)=>{
         
-        app.db('EventView') 
+        app.db('eventscalendar') 
             .then(events => res.json(events))
             .catch(err => res.status(500).json(err))
     }
